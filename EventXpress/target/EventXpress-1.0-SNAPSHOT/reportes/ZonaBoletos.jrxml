@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b2a88042-c156-41db-8ffd-c66d176e5cd1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT 
+    e.n_evento, ep.fecha,
+    SUM(CASE WHEN z.nombre_zona = 'VIP' THEN b.cantidad_boletos ELSE 0 END) AS VIP,
+    SUM(CASE WHEN z.nombre_zona = 'Medio' THEN b.cantidad_boletos ELSE 0 END) AS Medio,
+    SUM(CASE WHEN z.nombre_zona = 'General' THEN b.cantidad_boletos ELSE 0 END) AS General,
+    SUM(b.cantidad_boletos) AS suma_total_tres_zonas
+FROM 
+    eventos e
+    JOIN evento_programado ep ON ep.id_evento = e.id_evento
+    JOIN boletos b ON b.id_evento_progra = ep.id_evento_progra
+    JOIN zona_establec ze ON ze.id_zona_establec = b.id_zona_establec
+    JOIN zonas z ON z.id_zona = ze.id_zona
+GROUP BY 
+    e.n_evento, ep.fecha
+ORDER BY ep.fecha ASC;]]>
+	</queryString>
+	<field name="n_evento" class="java.lang.String"/>
+	<field name="fecha" class="java.sql.Date"/>
+	<field name="vip" class="java.lang.Long"/>
+	<field name="medio" class="java.lang.Long"/>
+	<field name="general" class="java.lang.Long"/>
+	<field name="suma_total_tres_zonas" class="java.lang.Long"/>
+	<group name="n_evento">
+		<groupExpression><![CDATA[$F{n_evento}]]></groupExpression>
+		<groupHeader>
+			<band height="37">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="7" width="555" height="24" forecolor="#B89F7D" backcolor="#000000" uuid="10e6d64f-e144-44fd-b87f-218b11222deb"/>
+					<textField isStretchWithOverflow="true">
+						<reportElement style="SubTitle" isPrintRepeatedValues="false" x="2" y="0" width="479" height="24" forecolor="#FFFFFF" uuid="3fdb1973-20ed-40eb-aa4b-7c3be945e4c7"/>
+						<textElement>
+							<font isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{n_evento}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="132" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="451" height="95" backcolor="#41A9C6" uuid="d6774b89-f74f-4ed5-a3d0-80b7287f40e9"/>
+				<staticText>
+					<reportElement style="Title" x="90" y="11" width="270" height="66" uuid="605ae1c3-9a84-4699-a35d-432bb5afe3fc"/>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[EventXpress]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="95" width="555" height="37" forecolor="#000000" backcolor="#2874A8" uuid="1ab2057d-c530-42e6-9601-71971df97c50"/>
+				<staticText>
+					<reportElement style="SubTitle" x="57" y="0" width="456" height="29" forecolor="#FFFFFF" uuid="f4aa871f-9546-4562-9092-ecda0cd160e3"/>
+					<textElement>
+						<font size="22" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Reporte de zonas con cantidad de boletos vendidos]]></text>
+				</staticText>
+			</frame>
+			<image>
+				<reportElement x="451" y="0" width="104" height="95" uuid="713bbbd7-1376-4f50-b2e3-4a52a341a5d0"/>
+				<imageExpression><![CDATA["C:\\Users\\nelki\\Music\\PROYECTO PROGRAMACIÓN III\\ProyectoPrograEventXpress\\EventXpress\\src\\main\\webapp\\reportes\\logoReporte.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="7" width="111" height="18" forecolor="#000000" uuid="0c5669f8-cb1c-4f82-8329-e0f4a50e0b4a"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="111" y="7" width="111" height="18" forecolor="#000000" uuid="37c35b71-95c6-4af8-8167-6ea71b39a0c5"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Vip]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="222" y="7" width="111" height="18" forecolor="#000000" uuid="f094d55c-04ae-4323-82f3-ef2ef3fb325a"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Medio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="333" y="7" width="111" height="18" forecolor="#000000" uuid="27dfa648-6a4f-4e66-9260-637ca3745f80"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[General]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="444" y="7" width="111" height="18" forecolor="#000000" uuid="cfaf1848-0e7e-41f6-861f-41f93062564e"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total de venta]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="18" uuid="b25b3a51-8449-42ac-86a1-81e3267fc937"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="111" height="18" uuid="fbf51e51-3a8f-4379-bced-763aed1b533c"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="111" y="0" width="111" height="18" uuid="b229ef62-89d4-44f4-af90-cf76488bd182"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{vip}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="222" y="0" width="111" height="18" uuid="5a0e0b70-76bd-4293-9726-29d70094e24f"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{medio}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="333" y="0" width="111" height="18" uuid="f75594d2-5a0a-48b6-9d07-ad008524fc6f"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{general}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="451" y="0" width="104" height="18" uuid="24043a83-d57a-466f-9fef-7ffc6bda7772"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{suma_total_tres_zonas}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="610cfaa9-ff05-4f09-a2a1-ae7581442672"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="555" height="24" forecolor="#D0B48E" backcolor="#2874A8" uuid="8d2c3709-b5c9-4a70-a3da-b36330f6d57a"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="6e5dfe18-010c-4839-ba8d-c24b3a3e3c4d"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="7e1d319a-b758-48ce-9785-b110e3ffacdb"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="1" width="197" height="20" forecolor="#FFFFFF" uuid="e89b456d-84f7-4413-8674-741287d2e4b5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

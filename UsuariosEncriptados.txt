@@ -1,0 +1,11 @@
+USUARIOS CON CONTRASEÑAS ENCRIPTADAS
+Usuario comun---Maria----contra1--------efcc06418ae6b9db034ad644e50c37391f13bc51ece24c84596bcbb677c80adb
+Administrador----Carlos----contra2-----9a3cf797cfa2a88760a3cc4338527dc3aabc7b368a78f9489955e26a7ead3ff9
+Administrador----Laura-----contra3----fe7bf6185895526f94158d808a293534aba6dbd0479079a7f4d0a22d69c29228
+Usuario comun---David ---contra4----d60c59511eef12377b715f627e902c8ee995f6579ef559a97ac69581acc5c920
+Administrador----Sofia---contra5----1bee6a8c9ce32998d67e36e4dcfa23b3829913f3ee8f882a00bbb07f7499b40d
+Usuario comun---Luis ----contra6----ae4900a8b5033d78e315e72f3f86826826330925f3468ffbd58ec367f0809caf
+Administrador---Ana ---contra7---05e0f18d016ee319609199d9074f205d5a0b460f09f292f95509480a8d521fe0
+Administrador---Juan---contra---2270e73a86e507f7a99d98e739a62f96ec812c1a19b37a0db27785e620518566
+Usuario comun---Pedro--contra8--08891142c999e0a9d6f249aa3436fac201b69c65315bc66d0f88f8d577e4c748
+Administrador----Marta---contra9---cba328df35e26cc10e94d21fd17af67bbdf8a7771a8362f22ac50e6e68f9dbe1

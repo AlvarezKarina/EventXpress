@@ -1,0 +1,2 @@
+La base de datos debe ser restaurada desde navicat
+Algunos daos tienen sus propias variables para la conexion, revisar y cambiar la contraseña si es necesario

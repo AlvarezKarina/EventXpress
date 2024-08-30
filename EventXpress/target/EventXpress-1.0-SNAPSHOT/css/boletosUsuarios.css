@@ -1,0 +1,33 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 2 oct. 2023, 17:52:49
+    Author     : ASUS
+*/
+
+/* Estilos para la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #0c0a0a;
+    padding: 8px;
+    text-align: center;
+}
+
+/* Estilos para el encabezado */
+th {
+    background-color: #07db3c;
+    font-weight: bold;
+}
+
+/* Estilos para las filas impares */
+tr:nth-child(odd) {
+    background-color: #f7f7f7;
+}
+

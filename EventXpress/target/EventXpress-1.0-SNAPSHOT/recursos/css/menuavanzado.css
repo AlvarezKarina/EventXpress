@@ -1,0 +1,294 @@
+/* Estilos del elemento nav que contiene el menú */
+#nav ul {
+list-style-type: none;
+padding: 0;
+margin: 0;
+}
+/* Estilos de las opciones principales del menú */
+#nav li {
+background-color: #375F85;
+border: 1px outset #375F85;
+color: white;
+cursor: pointer;
+display: inline-block;
+font-family: Tahoma,Helvetica,sans-serif;
+font-size: 1em;
+margin: -2px;
+padding: 5px;
+position: relative;
+text-align: center;
+vertical-align: top;
+width: 110px;
+}
+#nav #menuHorizontal {
+margin: 0 auto;
+width: 58%;
+}
+/* Estilos de los elementos de submenú */
+#menuHorizontal .submenu {
+animation-duration: 0.8s;
+-moz-animation-duration: 0.8s;
+-webkit-animation-duration: 0.8s;
+-o-animation-duration: 0.8s;
+-ms-animation-duration: 0.8s;
+border-radius: 0 0 10px 10px;
+-moz-border-radius: 0 0 10px 10px;
+-webkit-border-radius: 0 0 10px 10px;
+-o-border-radius: 0 0 10px 10px;
+-ms-border-radius: 0 0 10px 10px;
+box-shadow: 0 0.5px 5px #000;
+-moz-box-shadow: 0 0.5px 5px #000;
+-webkit-box-shadow: 0 0.5px 5px #000;
+-o-box-shadow: 0 0.5px 5px #000;
+-ms-box-shadow: 0 0.5px 5px #000;
+display: none;
+left: 1px;
+position: absolute;
+top: 36px;
+z-index: 10;
+}
+/* Estilos para las opciones de submenú */
+#menuHorizontal .submenu>li {
+display: block;
+animation-duration: 0.5s;
+-moz-animation-duration: 0.5s;
+-webkit-animation-duration: 0.5s;
+-o-animation-duration: 0.5s;
+-ms-animation-duration: 0.5s;
+}
+/* Efectos de animación para las opciones
+ de submenú cuando se posicione el puntero
+ del ratón encima de una de estas subopciones */
+#menuHorizontal .submenu>li:hover {
+animation-name: botonsubmenu;
+-moz-animation-name: botonsubmenu;
+-webkit-animation-name: botonsubmenu;
+-o-animation-name: botonsubmenu;
+-ms-animation-name: botonsubmenu;
+background-color: #c9d7e6;
+text-shadow: 2px 2px 2px #375f85;
+transform: scale(1.05);
+-moz-transform: scale(1.05);
+-webkit-transform: scale(1.05);
+-o-transform: scale(1.05);
+-ms-transform: scale(1.05);
+z-index: 2;
+}
+/* Media-queries que se aplicarán para animar
+ el menú transformándolo en etapas controlando
+ en varios pasos la secuencia de animación deseada */
+@keyframes botonsubmenu {
+0% {
+text-shadow: 200px 2px 20px #375f85;
+}
+ 50% {
+transform: scale(1.25);
+border-radius: 5px;
+}
+100%{
+transform: scale(1.05);
+text-shadow: 2px 2px 1px #375f85;
+}
+}
+@-moz-keyframes botonsubmenu {
+0% {
+text-shadow: 200px 2px 20px #375f85;
+-moz-text-shadow: 200px 2px 20px #375f85;
+}
+ 50% {
+-moz-transform: scale(1.25);
+-moz-border-radius: 5px;
+}
+100%{
+-moz-transform: scale(1.05);
+text-shadow: 2px 2px 1px #375f85;
+-moz-text-shadow: 2px 2px 1px #375f85;
+}
+}
+@-webkit-keyframes botonsubmenu {
+0% {
+text-shadow: 200px 2px 20px #375f85;
+-webkit-text-shadow: 200px 2px 20px #375f85;
+}
+ 50% {
+-webkit-transform: scale(1.25);
+-webkit-border-radius: 5px;
+}
+100%{
+-webkit-transform: scale(1.05);
+text-shadow: 2px 2px 1px #375f85;
+-webkit-text-shadow: 2px 2px 1px #375f85;
+}
+}
+@-o-keyframes botonsubmenu {
+0% {
+text-shadow: 200px 2px 20px #375f85;
+-o-text-shadow: 200px 2px 20px #375f85;
+}
+ 50% {
+-o-transform: scale(1.25);
+-o-border-radius: 5px;
+}
+100%{
+-o-transform: scale(1.05);
+text-shadow: 200px 2px 20px #375f85;
+-o-text-shadow: 2px 2px 1px #375f85;
+}
+}
+@-ms-keyframes botonsubmenu {
+0% {
+text-shadow: 200px 2px 20px #375f85;
+-ms-text-shadow: 200px 2px 20px #375f85;
+}
+ 50% {
+-ms-transform: scale(1.25);
+-ms-border-radius: 5px;
+}
+100%{
+-ms-transform: scale(1.05);
+text-shadow: 200px 2px 20px #375f85;
+-ms-text-shadow: 2px 2px 1px #375f85;
+}
+}
+/* Estableciendo bordes redondeados para
+ las opciones de submenú */
+#menuHorizontal .submenu li:last-child {
+border-radius: 0 0 10px 10px;
+-moz-border-radius: 0 0 10px 10px;
+-webkit-border-radius: 0 0 10px 10px;
+-o-border-radius: 0 0 10px 10px;
+-ms-border-radius: 0 0 10px 10px;
+}
+#menuHorizontal li:hover ul {
+animation-name: submenu;
+-moz-animation-name: submenu;
+-webkit-animation-name: submenu;
+-o-animation-name: submenu;
+-ms-animation-name: submenu;
+display: block;
+}
+/* Animación del submenú .submenu */
+@keyframes submenu {
+0% {
+opacity: 0;
+left: -150px;
+}
+50% {
+transform: scale(0.5);
+box-shadow: -10px 4px 8px 5px #000;
+}
+ 100% {
+opacity: 1;
+left: 1px;
+}
+}
+@-moz-keyframes submenu {
+0% {
+opacity: 0;
+left: -150px;
+}
+ 50% {
+-moz-transform: scale(0.5);
+box-shadow: -10px 4px 8px 5px #000;
+-moz-box-shadow: -10px 4px 8px 5px #000;
+}
+ 100% {
+opacity: 1;
+left: 1px;
+}
+}
+@-webkit-keyframes submenu {
+0% {
+opacity: 0;
+left: -150px;
+}
+50% {
+-webkit-transform: scale(0.5);
+box-shadow: -10px 4px 8px 5px #000;
+-webkit-box-shadow: -10px 4px 8px 5px #000;
+}
+ 100% {
+opacity: 1;
+left: 1px;
+}
+}
+@-o-keyframes submenu {
+0% {
+opacity: 0;
+left: -150px;
+}
+50% {
+-o-transform: scale(0.5);
+box-shadow: -10px 4px 8px 5px #000;
+-o-box-shadow: -10px 4px 8px 5px #000;
+}
+ 100% {
+opacity: 1;
+left: 1px;
+}
+}
+@-ms-keyframes submenu {
+0% {
+opacity: 0;
+left: -150px;
+}
+50% {
+-ms-transform: scale(0.5);
+box-shadow: -10px 4px 8px 5px #000;
+-ms-box-shadow: -10px 4px 8px 5px #000;
+}
+ 100% {
+opacity: 1;
+left: 1px;
+}
+}
+/* Transiciones de animación del submenú */
+#menuHorizontal>li {
+transition: all 0.6s ease;
+-moz-transition: all 0.6s ease;
+-webkit-transition: all 0.6s ease;
+-o-transition: all 0.6s ease;
+-ms-transition: all 0.6s ease;
+}
+#menuHorizontal>li:first-child {
+background-color: #d0dbe6;
+padding-top: 10px;
+box-shadow: 0 0 4px #375F85;
+-moz-box-shadow: 0 0 4px #375F85;
+-webkit-box-shadow: 0 0 4px #375F85;
+-o-box-shadow: 0 0 4px #375F85;
+-ms-box-shadow: 0 0 4px #375F85;
+border-radius: 10px 10px 0 0;
+-moz-border-radius: 10px 10px 0 0;
+-webkit-border-radius: 10px 10px 0 0;
+-o-border-radius: 10px 10px 0 0;
+-ms-border-radius: 10px 10px 0 0;
+border: 1px outset #d0dbe6;
+color: #375F85;
+text-shadow: 1px 1px 1px #375F85;
+-moz-text-shadow: 1px 1px 1px #375F85;
+-webkit-text-shadow: 1px 1px 1px #375F85;
+-o-text-shadow: 1px 1px 1px #375F85;
+-ms-text-shadow: 1px 1px 1px #375F85;
+}
+#menuHorizontal>li:hover {
+background-color: #abc;
+padding-top: 10px;
+box-shadow: 0 0 4px #375F85;
+-moz-box-shadow: 0 0 4px #375F85;
+-webkit-box-shadow: 0 0 4px #375F85;
+-o-box-shadow: 0 0 4px #375F85;
+-ms-box-shadow: 0 0 4px #375F85;
+border-radius: 10px 10px 0 0;
+-moz-border-radius: 10px 10px 0 0;
+-webkit-border-radius: 10px 10px 0 0;
+-o-border-radius: 10px 10px 0 0;
+-ms-border-radius: 10px 10px 0 0;
+border: 1px outset #abc;
+color: #375F85;
+text-shadow: 1px 1px 1px #375F85;
+-moz-text-shadow: 1px 1px 1px #375F85;
+-webkit-text-shadow: 1px 1px 1px #375F85;
+-o-text-shadow: 1px 1px 1px #375F85;
+-ms-text-shadow: 1px 1px 1px #375F85;
+}

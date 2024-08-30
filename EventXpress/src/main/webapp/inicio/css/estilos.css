@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto', serif;
+}
+
+.container{
+    width: 80%;
+    height: auto;
+    overflow: hidden;
+    margin: auto;
+    text-align: center;
+    padding: 40px 0px;
+}
+
+.izquierda, .derecha{
+    width: 47%;
+    height: auto; 
+    overflow: hidden;
+    border: 1px solid #fff;
+    display: inline-block;
+}
+
+.izquierda{
+    float: left;
+}
+
+.subtitulo{
+    font-size: 60px;
+}
+
+.descripcion{
+    font-weight: 300;
+    font-size: 30px;
+}
+
+.img{
+   width: 100%;
+}
+
+.derecha{
+    float: right;
+}

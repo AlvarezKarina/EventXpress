@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0e3c8e21-27f3-4bf0-8bc6-e3a3e888c4a2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[WITH GananciasPorEvento AS (
+    SELECT
+        es.n_establecimiento,
+        e.n_evento,
+        TO_CHAR(ep.fecha, 'DD/MM/YYYY') AS fecha,
+        SUM(b.cantidad_boletos * ze.precio) AS ventas_en_evento
+    FROM
+        boletos b
+    JOIN evento_programado ep ON b.id_evento_progra = ep.id_evento_progra
+    JOIN zona_establec ze ON b.id_zona_establec = ze.id_zona_establec
+    JOIN establecimiento es ON ep.id_establecimiento = es.id_establecimiento
+    JOIN eventos e ON ep.id_evento = e.id_evento
+    GROUP BY
+        es.n_establecimiento, e.n_evento, ep.fecha
+)
+
+SELECT
+    n_establecimiento,
+    STRING_AGG(n_evento || ' - ' || fecha || ': $' || CAST(ventas_en_evento AS VARCHAR), ', ') AS eventos_y_ganancias,
+    SUM(ventas_en_evento) AS ganancia_total_establecimiento
+FROM
+    GananciasPorEvento
+GROUP BY
+    n_establecimiento
+ORDER BY
+    n_establecimiento]]>
+	</queryString>
+	<field name="n_establecimiento" class="java.lang.String"/>
+	<field name="eventos_y_ganancias" class="java.lang.String"/>
+	<field name="ganancia_total_establecimiento" class="java.math.BigDecimal"/>
+	<group name="n_establecimiento">
+		<groupExpression><![CDATA[$F{n_establecimiento}]]></groupExpression>
+		<groupHeader>
+			<band height="37">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="7" width="555" height="24" forecolor="#B89F7D" backcolor="#000000" uuid="550bf514-da20-46b3-9ceb-4e71e0006a5e"/>
+					<textField isStretchWithOverflow="true">
+						<reportElement style="SubTitle" isPrintRepeatedValues="false" x="180" y="0" width="301" height="24" forecolor="#FFFFFF" uuid="2e14db56-4ec9-4d7e-8f7b-d99f87a9c696"/>
+						<textElement>
+							<font isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{n_establecimiento}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="132" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="451" height="95" backcolor="#41A9C6" uuid="af9743d9-1005-4f9f-b075-edb18cd5a83d"/>
+				<staticText>
+					<reportElement style="Title" x="104" y="18" width="266" height="66" uuid="840bb81f-40b9-4dea-9a38-6d627fca38bc"/>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[EventXpress]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="95" width="553" height="37" forecolor="#000000" backcolor="#2874A8" uuid="1aa2b5b1-f7b2-4e58-a25f-99d419c189c7"/>
+				<staticText>
+					<reportElement style="SubTitle" x="104" y="0" width="347" height="29" forecolor="#FFFFFF" uuid="e141f6d3-1e1b-4f50-b5b5-fd2b66c70800"/>
+					<textElement>
+						<font size="22" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Reporte de ventas por establecimiento]]></text>
+				</staticText>
+			</frame>
+			<image>
+				<reportElement x="450" y="0" width="104" height="95" uuid="348d207e-12e8-45b1-b577-cb29be236b2e"/>
+				<imageExpression><![CDATA["C:\\Users\\nelki\\Music\\PROYECTO PROGRAMACIÓN III\\ProyectoPrograEventXpress\\EventXpress\\src\\main\\webapp\\reportes\\logoReporte.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="7" width="121" height="18" forecolor="#000000" uuid="b9c2ba04-b074-4d56-aca6-6d56a4aef1e3"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Eventos y ganancias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="370" y="7" width="184" height="18" forecolor="#000000" uuid="e9bc6f60-41bf-46ee-8e27-8d4ba9f2e499"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ganancia total establecimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="6" width="108" height="20" uuid="f318a93a-00d4-441c-9144-9e6dc1835e3c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Establecimiento]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="18" uuid="916f4fe8-6204-4717-8eb3-51cb90146283"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="311" height="18" uuid="738b08c3-ab1e-45fc-8d8f-f7fa70369e30"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{eventos_y_ganancias}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="420" y="0" width="134" height="18" uuid="cd4b8275-9104-49b2-9b38-de0ad30588d9"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ganancia_total_establecimiento}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="7d741a16-2617-4cc9-bb8f-f7851eae7f5a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="555" height="24" forecolor="#D0B48E" backcolor="#2874A8" uuid="990c1717-c39d-4dcf-a15c-c0bb5c3d696c"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="6ecbb68f-589f-46eb-b00f-ff90fac65fa6"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="5090c809-ac9b-410f-8311-a96037082f16"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="1" width="197" height="20" forecolor="#FFFFFF" uuid="eaf53949-bcef-4556-ad40-5811bc69807b"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8a2bfcd7-1d8f-491a-9cdb-4379bc76ae2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT ze.id_zona_establec,ev.n_evento,ep.fecha,ep.hora_inicia,zn.nombre_zona,
+ COALESCE(ze.capacidad_zona - SUM(bl.cantidad_boletos), ze.capacidad_zona) AS boletos_no_vendidos
+,et.n_establecimiento FROM zona_establec ze LEFT JOIN boletos bl on ze.id_zona_establec=bl.id_zona_establec 
+INNER JOIN zonas zn on zn.id_zona=ze.id_zona
+INNER JOIN establecimiento et on et.id_establecimiento=ze.id_establecimiento
+INNER JOIN evento_programado ep on ep.id_establecimiento=et.id_establecimiento
+INNER JOIN eventos ev on ep.id_evento=ev.id_evento
+GROUP BY ep.fecha,et.n_establecimiento,ev.n_evento,ze.id_zona_establec,ze.capacidad_zona,zn.nombre_zona,ep.hora_inicia
+ORDER BY ep.fecha]]>
+	</queryString>
+	<field name="id_zona_establec" class="java.lang.Integer"/>
+	<field name="n_evento" class="java.lang.String"/>
+	<field name="fecha" class="java.sql.Date"/>
+	<field name="hora_inicia" class="java.sql.Time"/>
+	<field name="nombre_zona" class="java.lang.String"/>
+	<field name="boletos_no_vendidos" class="java.lang.Long"/>
+	<field name="n_establecimiento" class="java.lang.String"/>
+	<variable name="boletos_no_vendidos_1" class="java.lang.Long" resetType="Group" resetGroup="n_establecimiento" calculation="Sum">
+		<variableExpression><![CDATA[$F{boletos_no_vendidos}]]></variableExpression>
+	</variable>
+	<variable name="boletos_no_vendidos_2" class="java.lang.Long" resetType="Group" resetGroup="n_establecimiento" calculation="Sum">
+		<variableExpression><![CDATA[$F{boletos_no_vendidos}]]></variableExpression>
+	</variable>
+	<group name="n_establecimiento">
+		<groupExpression><![CDATA[$F{n_establecimiento}]]></groupExpression>
+		<groupHeader>
+			<band height="90">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="24" forecolor="#B89F7D" backcolor="#000000" uuid="012fb426-1068-4ca6-a480-f8e5b6c6a4a7"/>
+					<textField isStretchWithOverflow="true">
+						<reportElement style="SubTitle" isPrintRepeatedValues="false" x="110" y="0" width="418" height="24" forecolor="#FFFFFF" uuid="71890414-d61e-4dd9-b0af-0cfd71a80e40"/>
+						<textElement>
+							<font fontName="Times New Roman" size="14" isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{n_establecimiento}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement style="Column header" x="2" y="0" width="106" height="24" forecolor="#FFFFFF" uuid="10ec7357-3a8b-4a4b-9503-3f7028379290"/>
+						<textElement>
+							<font fontName="Times New Roman" isBold="false"/>
+						</textElement>
+						<text><![CDATA[Establecimiento:]]></text>
+					</staticText>
+				</frame>
+				<staticText>
+					<reportElement style="Column header" x="4" y="31" width="57" height="18" forecolor="#000000" uuid="2e7c8042-6eed-402d-996a-27b0fbdcc651"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Evento:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="78" y="31" width="92" height="18" uuid="8c123398-5edf-42be-a961-fa14730ea6a7"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{n_evento}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="2" y="72" width="42" height="18" forecolor="#000000" uuid="4f0695fe-7df1-4607-a007-fc570d85a529"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Zona:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="278" y="31" width="128" height="18" forecolor="#000000" uuid="347a832f-d5b2-4d04-b863-a95868aa840d"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Fecha de realizacion:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="406" y="31" width="122" height="18" uuid="a8e9ac45-57f1-497f-b8ff-2236750be0ca"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="314" y="72" width="92" height="18" forecolor="#000000" uuid="b1e42cd2-fb94-4e88-abc2-18cc1c531a03"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Hora de inicio:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="406" y="72" width="92" height="18" uuid="64b4dc99-53da-47f3-85f7-44bd1844954b"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{hora_inicia}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="134" y="72" width="124" height="18" forecolor="#000000" uuid="2c7a7db1-80d3-4c65-a2d3-c1dc10dc9607"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Boletos no vendidos:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="31">
+				<staticText>
+					<reportElement style="Column header" x="2" y="2" width="108" height="18" forecolor="#000000" uuid="4caf9730-a20d-4bb3-aa59-c66c67cbd6d7"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Total no vendidos:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="110" y="2" width="109" height="20" uuid="79d47723-d8f7-4ebf-af8c-13373742ed2b"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{boletos_no_vendidos_2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="132" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="451" height="95" backcolor="#41A9C6" uuid="efafde2a-abb5-4298-b8e7-dda5346cc67a"/>
+				<staticText>
+					<reportElement style="Title" x="108" y="14" width="258" height="66" uuid="ce4403dd-44ff-4c41-b36c-0448891b2b05"/>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[EventXpress]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="95" width="555" height="37" forecolor="#000000" backcolor="#2874A8" uuid="940e1c73-b9bf-42ec-b01a-357dd030046a"/>
+				<staticText>
+					<reportElement style="SubTitle" x="32" y="0" width="447" height="29" uuid="9bb7b3c7-70bf-45ea-87a0-06e4dfb20dfc"/>
+					<textElement>
+						<font size="18" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Reporte de boletos no vendidos por zonas y establecimiento]]></text>
+				</staticText>
+			</frame>
+			<image>
+				<reportElement x="451" y="0" width="104" height="95" uuid="a91e4d17-58e7-48fd-b649-c962668e0ead"/>
+				<imageExpression><![CDATA["C:\\Users\\nelki\\Music\\PROYECTO PROGRAMACIÓN III\\ProyectoPrograEventXpress\\EventXpress\\src\\main\\webapp\\reportes\\logoReporte.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="50" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="18" uuid="982eacb4-dc1b-4613-baf7-acf0a7df76d0"/>
+			</frame>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" positionType="Float" x="0" y="0" width="110" height="18" uuid="388fba93-7d2c-4029-a76f-68a7ea214294"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_zona}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" positionType="Float" x="181" y="0" width="162" height="18" uuid="4df899f3-aed0-47b7-8674-22b24860668b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{boletos_no_vendidos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="11" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="b353c557-d799-4cd7-869f-dfd6340c0ce8"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="0" width="543" height="24" forecolor="#D0B48E" backcolor="#2874A8" uuid="eee14777-36e3-4fd2-a44c-25f0f595380a"/>
+				<textField>
+					<reportElement style="Column header" x="421" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="46fff176-1674-426d-9834-25c689490874"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="1" width="197" height="20" forecolor="#FFFFFF" uuid="04dc4b9c-ca1d-44dc-8653-7ab7ab7f35bc"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="501" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="9d9d2864-9455-4c38-be05-e463e8c267ad"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
